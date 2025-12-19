@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from apps.students.models import Estudiante
 from apps.offers.models import Oferta
+from apps.internships.models import Practica
 
 class Postulacion(models.Model):
     STATUS_CHOICES = [
@@ -25,6 +26,19 @@ class Postulacion(models.Model):
         ]
         verbose_name = "Postulación"
         verbose_name_plural = "Postulaciones"
+
+    def save(self, *args, **kwargs):
+        previous_status = None
+        if self.pk:
+            previous_status = Postulacion.objects.get(pk=self.pk).estado
+
+        super().save(*args, **kwargs)
+
+        if (self.estado == "ACCEPTED" and previous_status != "ACCEPTED"):
+            Practica.objects.create(estudiante=self.estudiante,
+                                    empresa=self.oferta.empresa,
+                                    oferta=self.oferta,
+                                    estado="ACTIVE")
 
     def __str__(self):
         return f"{self.estudiante} → {self.oferta}"

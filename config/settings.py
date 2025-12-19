@@ -44,8 +44,6 @@ INSTALLED_APPS = [
     'apps.offers',
     'apps.postulations',
     'apps.internships',
-    'apps.documents',
-    'apps.evaluations',
     'apps.tutors',
     'apps.reports'
 ]
