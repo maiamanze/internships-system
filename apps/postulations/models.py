@@ -38,7 +38,7 @@ class Postulacion(models.Model):
             Practica.objects.create(estudiante=self.estudiante,
                                     empresa=self.oferta.empresa,
                                     oferta=self.oferta,
-                                    estado="ACTIVE")
+                                    estado="PENDING")
 
     def __str__(self):
         return f"{self.estudiante} → {self.oferta}"
