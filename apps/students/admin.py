@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Student
+from .models import Estudiante
 
-@admin.register(Student)
+@admin.register(Estudiante)
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ('user', 'legacy', 'career', 'year', 'academic_state')
-    search_fields = ('legacy', 'user__first_name', 'user__last_name')
+    list_display = ('usuario', 'dni', 'carrera', 'anio', 'estado_academico')
+    search_fields = ('dni', 'user__first_name', 'user__last_name')
 
