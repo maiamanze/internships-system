@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.core.exceptions import ValidationError
 from .models import Postulacion
 
 @admin.register(Postulacion)
@@ -10,3 +11,15 @@ class PostulationAdmin(admin.ModelAdmin):
                     'estudiante__dni',
                     'oferta__titulo',
                     'oferta__empresa__nombre')
+    actions = ["accept_postulation"]
+
+    def accept_postulation(self, request, queryset):
+        for postulation in queryset:
+            try:
+                postulation.accept(accepted_by_user=request.user)
+            except ValidationError as e:
+                self.message_user(request, str(e), level="error")
+                return 
+            
+        self.message_user(request, "Postulación aceptada y oferta cerrada correctamente")
+        

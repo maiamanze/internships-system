@@ -7,4 +7,3 @@ class OfferAdmin(admin.ModelAdmin):
     list_filter = ('estado', 'empresa')
     search_fields = ('titulo', 'empresa__nombre')
 
-# Register your models here.
